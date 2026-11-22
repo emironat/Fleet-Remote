@@ -1,0 +1,8 @@
+adb-shell[async]>=0.4.4
+rsa>=4.9
+pyasn1>=0.5
+fastapi>=0.110
+uvicorn>=0.27
+pywebview>=5.0
+pyatv>=0.14.5
+truststore>=0.9
