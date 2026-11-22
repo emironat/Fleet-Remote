@@ -1,81 +1,120 @@
 # Fleet Remote
 
-Control many Amazon Fire TV Cubes and Apple TVs from one window, by IP address.
-Send remote keys to one device or a group, launch apps, type text, run shell
-commands, see live screenshots, keep Fire TVs from going to sleep
-(Never sleep) and see what a Fire TV sends over HDMI (resolution, frame rate,
-audio format and channels). No ADB install needed.
+Control many Amazon Fire TV devices (Cube, Stick) and Apple TVs from one window, by IP
+address, on Windows or Mac. No ADB install needed.
 
-Written in Python. Developed and tested on Windows. The Mac steps below should
-work but have not been tested yet (live video needs macOS 13.3 or newer).
+Current version: **v3.52** (the number is in the file name: `fleet_remote_v3.52.py`).
 
-The number in the file name is the version (fleet_remote_v3.40.py = v3.40).
-You only need the file name for the command-line options below.
+## What it does
+
+| Part of the window | What you can do |
+|---|---|
+| **Devices** | Add devices by IP (**+ Add device**), sort them into groups (**+ Add group**), fold a group away by clicking it, **Connect all**. Click a device to control it. Double-click its name or IP to change its name, IP address or group. |
+| **Remote** | D-pad, OK, Back, Home, Menu, rewind / play-pause / fast forward, volume. The **gear** opens the TV's Settings page and the **power** button puts a Fire TV in standby or wakes it. Your keyboard works too: arrows, Enter = OK, Backspace = Back, Space = Play/Pause. |
+| **Screen** (Fire TV) | **Screenshot**, **Auto** (a new screenshot every 3 s) or **Live video** (with Low / Normal / High quality). Protected video (Netflix etc.) shows as black: Fire TV keeps it out of captures. |
+| **Keyboard** | **Type + Send** a line of text, or **Live typing**: your keys go straight to the TV (Esc stops it). Backspace, Clear field, Enter. |
+| **HDMI Signal & Sleep** (Fire TV) | **Never sleep**: Enabled keeps it awake (no screen saver, no sleep), Disabled puts its own timers back. What it sends over HDMI right now: video mode, colour, HDR, audio format and the audio channels present. **Download EDID** saves the EDID of the TV (or EDID emulator) it is plugged into to your Downloads folder, as a `.bin` (raw bytes, for an EDID tool or emulator) and a `.txt` (decoded, with a hex dump). |
+
+Apple TV: remote keys, Settings and power. Screen, Never sleep, HDMI info and EDID are
+Fire TV only (Apple TV doesn't allow them).
 
 ## Before you start
 
-- Fire TV: turn on **ADB debugging** (Settings > My Fire TV > Developer Options).
-  The first time you connect, the TV asks you to allow the computer. Choose Always allow.
-- Apple TV: you pair once with a 4 digit code shown on the TV.
-- The computer must be on the same network as the devices (or reach it over VPN).
+- **Fire TV:** turn on **ADB debugging** (Settings > My Fire TV > Developer Options).
+  The first time you connect, the TV asks to allow the computer: tick **Always allow** and choose OK.
+- **Apple TV:** the first time you connect, the TV shows a 4-digit code; type it into Fleet Remote.
+- The computer must be on the same network as the devices (or reach them over VPN).
 
-## Install and start (Windows and Mac)
+## Install and start
 
-1. Install Python 3.10 or newer from https://www.python.org/downloads/
-   - Windows: tick "Add python.exe to PATH" in the installer.
-   - Mac: after the installer, open Applications > Python 3.x and double-click
-     `Install Certificates.command` once.
-2. Download this repository: green **Code** button > **Download ZIP**, then unzip it.
-3. **Windows:** double-click **`Fleet Remote.pyw`** in the unzipped folder.
-4. **Mac:** a Mac opens Python files in the IDLE editor by default, so set this up once:
-   1. In Finder, right-click `Fleet Remote.pyw` > **Get Info**.
-   2. Under **Open with**, choose **Python Launcher** (in Applications > Python 3.x;
-      if it is not in the list, pick **Other...** and find it there).
-   3. Click **Change All...** > **Continue**.
+You need **Python 3.10 or newer** from https://www.python.org/downloads/
 
-   Now double-click `Fleet Remote.pyw`. A Terminal window may open too; you can close it,
-   the app keeps running. (If IDLE still opens instead, press **F5** in the window with
-   the code to start it.)
+1. Install Python. **Windows:** tick **"Add python.exe to PATH"** in the installer.
+2. Download this repository: green **Code** button > **Download ZIP**, then unzip it
+   somewhere you will keep it (for example Documents).
+3. Start it:
+   - **Windows:** double-click **`Fleet Remote.pyw`**. The first time it also makes a
+     **`Fleet Remote`** shortcut with the app's icon in the same folder. From then on, start
+     it from that shortcut (you can pin it to the taskbar or Start, or copy it to the Desktop).
+   - **Mac:** the first time only, right-click **`Fleet Remote.pyw`** > **Open With** >
+     **Python Launcher** (in Applications > Python 3.x). This makes **`Fleet Remote.app`** in
+     the same folder. From then on double-click that (you can drag it to the Dock).
+     Keep `Fleet Remote.app` inside the Fleet Remote folder: it starts the files next to it.
 
-The first start installs what Fleet Remote needs (a small window says so, about a
-minute). After that it opens straight away. Make a shortcut (Windows) or an alias
-(Mac) to `Fleet Remote.pyw` on your Desktop if you like.
-
-The launcher always starts the newest `fleet_remote_v*.py` in the folder, so keep
-starting the app through it: after an update the old versioned file is gone.
-If the setup fails, the details are in `.firecube-fleet/setup.log` in your home folder.
+The very first start installs what Fleet Remote needs, quietly in the background, so the
+window takes about a minute to appear. After that it opens straight away.
+If Python refuses to install packages (Homebrew Python on a Mac), Fleet Remote makes its
+own `venv` folder next to the app and installs there by itself.
 
 ## Updating
 
-Click **Check for updates** next to the version number at the top of the app. When a
-newer version is on GitHub the button turns into **Update to vX.Y**. Click it: Fleet
-Remote downloads the new file into its folder, installs any new packages, restarts on
-the new version and removes the old file. Your devices and settings are not touched.
+Download the new ZIP and copy its files into your Fleet Remote folder (replace them when
+asked). The launcher always starts the newest `fleet_remote_v*.py`, so you can delete the
+old one or leave it. Your devices and settings are kept: they are not in the app folder
+(see below).
 
 ## Options
 
-| Command | What it does |
+The launcher passes these on, and so does running the app file directly:
+
+| Option | What it does |
 |---|---|
-| `python fleet_remote_v3.40.py` | Opens the app in its own window |
-| `python fleet_remote_v3.40.py --browser` | Opens it in your web browser instead (use this if the window does not open) |
-| `python fleet_remote_v3.40.py --port 9000` | Use a specific port |
-| `python fleet_remote_v3.40.py --share` | Also lets other computers on the network open it in a browser; they must enter the access code printed in the console |
+| `--browser` | Opens Fleet Remote in your web browser instead of its own window (use this if the window doesn't open) |
+| `--port 9000` | Uses a specific port (default 8756; a free one is picked if that's taken) |
+| `--share` | Also lets other computers on the network open it in a browser. They need the address and access code shown in Fleet Remote's status line (also printed in a console, and saved in `share_code.txt`) |
+
+How to use them:
+- **Windows:** open a Command Prompt in the folder and run `pyw "Fleet Remote.pyw" --share`,
+  or add the option at the end of the shortcut's **Target** (right-click > Properties).
+- **Mac:** open Terminal in the folder and run `python3 "Fleet Remote.pyw" --share`.
+- Or run the app file itself: `python fleet_remote_v3.52.py --browser` (Windows) /
+  `python3 fleet_remote_v3.52.py --browser` (Mac).
 
 ## Your devices and settings
 
-Saved in a hidden folder called `.firecube-fleet` in your home folder
-(on Windows `C:\Users\<you>\.firecube-fleet`):
+They are kept in a hidden folder called **`.firecube-fleet`** in your home folder:
+Windows `C:\Users\<you>\.firecube-fleet`, Mac `/Users/<you>/.firecube-fleet`
+(in Finder press Shift + Command + . to show hidden folders).
 
-- `devices.json`: your device list (and, for a Fire TV set to Never sleep, the
-  sleep timers it had before, so Disabled can put them back)
-- `adbkey`: the key the Fire TVs approved
+| File | What it is |
+|---|---|
+| `devices.json` | Your devices: name, IP, group, Apple TV pairing keys, and the sleep timers a Fire TV had before Never sleep |
+| `groups.json` | Your groups |
+| `adbkey`, `adbkey.pub` | The key your Fire TVs approved ("Always allow") |
+| `share_code.txt` | The `--share` access code |
+| `error.log`, `setup.log` | Details when something fails at start or during the first-start install |
+| `scrcpy-server-v5.0.1`, `webview` | Live video helper (downloaded from GitHub the first time you use Live video) and the window's own storage |
 
-To move to another computer, copy both files into the same folder there.
-On a Mac, press Shift + Command + . in Finder to show hidden folders.
+**Moving to another computer:** copy `devices.json`, `groups.json`, `adbkey` and
+`adbkey.pub` into the same folder there. The Fire TVs then know the new computer
+already; Apple TVs may need pairing again.
+
+## Files in this folder
+
+| File | What it is |
+|---|---|
+| `fleet_remote_v3.52.py` | The app |
+| `Fleet Remote.pyw` | The launcher: installs what's needed the first time, makes the shortcut / Mac app, starts the newest app file |
+| `requirements.txt` | The Python packages it installs |
+| `icon.ico` | The app's icon |
+| `Fleet Remote.lnk` / `Fleet Remote.app` | Made by the launcher on your computer (not part of the download) |
 
 ## Troubleshooting
 
-- **No window appears:** run with `--browser`.
-- **"python3: command not found" or version too old:** install Python from python.org.
-- **A device will not connect:** check ADB debugging is on and the IP is reachable (try ping).
-- **Mac asks to allow incoming network connections:** choose Allow.
+- **No window appears:** start it with `--browser` (see Options). On Windows the window
+  needs Microsoft Edge WebView2, which Windows 10 and 11 normally have.
+- **"Fleet Remote could not install what it needs":** check the internet connection; the
+  details are in `.firecube-fleet/setup.log`.
+- **A Fire TV won't connect:** check ADB debugging is on, the IP is right and reachable
+  (ping it), and accept the prompt on the TV. If you once chose Deny, turn ADB debugging
+  off and on again on the TV.
+- **Live video doesn't start:** it needs internet the first time (it downloads a small
+  helper from GitHub). On a Mac it needs macOS 13.3 or newer. If it says the encoder is
+  stuck, restart the Fire TV.
+- **Mac: devices can't be reached:** allow **Python** under System Settings > Privacy &
+  Security > **Local Network**. With `--share`, also choose **Allow** when the Mac asks
+  about incoming network connections.
+- **Mac: "Fleet Remote.app can't be opened":** right-click it > Open the first time.
+
+Developed and tested on Windows. The Mac version is written to work the same, but has not
+been tested on a Mac yet. Apple TV power is untested.
