@@ -3,7 +3,7 @@
 Control many Amazon Fire TV devices (Cube, Stick) and Apple TVs from one window, by IP
 address, on Windows or Mac. No ADB install needed.
 
-Current version: **v3.55** (the number is in the file name: `fleet_remote_v3.55.py`).
+Current version: **v3.56** (the number is in the file name: `fleet_remote_v3.56.py`).
 
 ## What it does
 
@@ -44,7 +44,8 @@ You need **Python 3.10 or newer** from https://www.python.org/downloads/
      Keep `Fleet Remote.app` inside the Fleet Remote folder: it starts the files next to it.
 
 The very first start installs what Fleet Remote needs, quietly in the background, so the
-window takes about a minute to appear. After that it opens straight away.
+window takes about a minute to appear (a Mac shows a notification that it has begun). After
+that it opens straight away.
 If Python refuses to install packages (Homebrew Python on a Mac), Fleet Remote makes its
 own `venv` folder next to the app and installs there by itself.
 
@@ -69,8 +70,8 @@ How to use them:
 - **Windows:** open a Command Prompt in the folder and run `pyw "Fleet Remote.pyw" --share`,
   or add the option at the end of the shortcut's **Target** (right-click > Properties).
 - **Mac:** open Terminal in the folder and run `python3 "Fleet Remote.pyw" --share`.
-- Or run the app file itself: `python fleet_remote_v3.55.py --browser` (Windows) /
-  `python3 fleet_remote_v3.55.py --browser` (Mac).
+- Or run the app file itself: `python fleet_remote_v3.56.py --browser` (Windows) /
+  `python3 fleet_remote_v3.56.py --browser` (Mac).
 
 ## Your devices and settings
 
@@ -95,7 +96,7 @@ already; Apple TVs may need pairing again.
 
 | File | What it is |
 |---|---|
-| `fleet_remote_v3.55.py` | The app |
+| `fleet_remote_v3.56.py` | The app |
 | `Fleet Remote.pyw` | The launcher: installs what's needed the first time, makes the shortcut / Mac app, starts the newest app file |
 | `requirements.txt` | The Python packages it installs |
 | `icon.ico` | The app's icon |
@@ -108,8 +109,12 @@ already; Apple TVs may need pairing again.
   open window to the front.
 - **The shortcut stopped working after a Python update:** double-click `Fleet Remote.pyw`
   once; it rebuilds the shortcut for the new Python (re-pin it to the taskbar if you pinned it).
-- **No window appears:** start it with `--browser` (see Options). On Windows the window
-  needs Microsoft Edge WebView2, which Windows 10 and 11 normally have.
+- **It opened in the browser instead of its own window (Windows):** the window needs the
+  Microsoft Edge WebView2 runtime, which Windows 10 and 11 normally have. Install it from
+  https://developer.microsoft.com/microsoft-edge/webview2/ if it's missing.
+- **No window appears:** start it with `--browser` (see Options).
+- **Mac: quitting:** Cmd+Q, the red close button and Dock > Quit all stop Fleet Remote
+  properly (live video on the TVs is ended first).
 - **"Fleet Remote could not install what it needs":** check the internet connection; the
   details are in `.firecube-fleet/setup.log`.
 - **A Fire TV won't connect:** check ADB debugging is on, the IP is right and reachable

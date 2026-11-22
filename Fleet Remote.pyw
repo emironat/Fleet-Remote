@@ -118,7 +118,9 @@ def make_venv(exe: Path) -> "Path | None":
     """A Python that refuses installs (Homebrew on a Mac, PEP 668) gets a private
     'venv' folder next to this file instead; python() uses it from then on."""
     base = HERE / "venv"
-    r = subprocess.run([str(exe), "-m", "venv", str(base)], capture_output=True, text=True, **NO_WINDOW)
+    # --clear: after a Python upgrade an old venv points at a Python that is gone
+    r = subprocess.run([str(exe), "-m", "venv", *(["--clear"] if base.exists() else []), str(base)],
+                       capture_output=True, text=True, **NO_WINDOW)
     v = base / ("Scripts/pythonw.exe" if WIN else "bin/python")
     return v if r.returncode == 0 and v.is_file() else None
 
@@ -292,6 +294,10 @@ def main() -> None:
     if sys.platform == "darwin":
         mac_app(exe)
     if missing(exe):
+        if sys.platform == "darwin":                    # the install is silent: say it has begun
+            with_notice = ("display notification \"Setting up Fleet Remote, about a minute. "
+                           "The window opens by itself.\" with title \"Fleet Remote\"")
+            subprocess.Popen(["osascript", "-e", with_notice], stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         err = setup(exe)
         if err and "externally-managed" in err + _log_text():
             venv = make_venv(exe)
