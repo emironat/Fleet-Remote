@@ -9,8 +9,8 @@ audio format and channels). No ADB install needed.
 Written in Python. Developed and tested on Windows. The Mac steps below should
 work but have not been tested yet (live video needs macOS 13.3 or newer).
 
-The number in the file name is the version (fleet_remote_v3.39.py = v3.39).
-If your copy has a different number, use that file name in the commands below.
+The number in the file name is the version (fleet_remote_v3.40.py = v3.40).
+You only need the file name for the command-line options below.
 
 ## Before you start
 
@@ -19,55 +19,23 @@ If your copy has a different number, use that file name in the commands below.
 - Apple TV: you pair once with a 4 digit code shown on the TV.
 - The computer must be on the same network as the devices (or reach it over VPN).
 
-## Install on Windows
+## Install and start (Windows and Mac)
 
 1. Install Python 3.10 or newer from https://www.python.org/downloads/
-   (tick "Add python.exe to PATH" in the installer).
+   - Windows: tick "Add python.exe to PATH" in the installer.
+   - Mac: after the installer, open Applications > Python 3.x and double-click
+     `Install Certificates.command` once.
 2. Download this repository: green **Code** button > **Download ZIP**, then unzip it.
-3. Open the unzipped folder, click the address bar in File Explorer, type `cmd`, press Enter.
-4. Run these lines one at a time:
+3. Double-click **`Fleet Remote.pyw`** in the unzipped folder.
+   - Mac: the first time, right-click it > **Open With** > **Python Launcher**.
 
-```
-python -m venv venv
-venv\Scripts\activate
-pip install -r requirements.txt
-python fleet_remote_v3.39.py
-```
+The first start installs what Fleet Remote needs (a small window says so, about a
+minute). After that it opens straight away. Make a shortcut (Windows) or an alias
+(Mac) to `Fleet Remote.pyw` on your Desktop if you like.
 
-Next time: open `cmd` in the folder and run
-`venv\Scripts\activate` then `python fleet_remote_v3.39.py`.
-
-## Install on a Mac
-
-1. Install Python 3.10 or newer from https://www.python.org/downloads/
-   (download the macOS installer, open it, click through).
-2. Download this repository: green **Code** button > **Download ZIP**.
-   It lands in your Downloads folder as `Fleet-Remote-main` (double-click the zip if it did not unzip).
-3. Open **Terminal** (press Command + Space, type Terminal, press Enter).
-4. Type `cd ` (with a space after it), drag the `Fleet-Remote-main` folder from Finder
-   into the Terminal window, and press Enter.
-5. Run these lines one at a time:
-
-```
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python fleet_remote_v3.39.py
-```
-
-Next time: open Terminal, `cd` to the folder the same way, then run
-`source venv/bin/activate` and `python fleet_remote_v3.39.py`.
-
-## Starting it with a double-click
-
-- **Windows:** double-click `Fleet Remote.pyw` (or make a shortcut to it on the Desktop).
-  It starts the newest `fleet_remote_v*.py` in the folder, without a console window,
-  using the `venv` from the install steps when there is one.
-- **Mac:** once, in Terminal in the folder: `chmod +x "Fleet Remote.command"`.
-  After that, double-click `Fleet Remote.command` in Finder.
-
-Always start the app through the launcher (or the newest versioned file): after an
-update the old `fleet_remote_v*.py` is gone and a shortcut to it would break.
+The launcher always starts the newest `fleet_remote_v*.py` in the folder, so keep
+starting the app through it: after an update the old versioned file is gone.
+If the setup fails, the details are in `.firecube-fleet/setup.log` in your home folder.
 
 ## Updating
 
@@ -80,10 +48,10 @@ the new version and removes the old file. Your devices and settings are not touc
 
 | Command | What it does |
 |---|---|
-| `python fleet_remote_v3.39.py` | Opens the app in its own window |
-| `python fleet_remote_v3.39.py --browser` | Opens it in your web browser instead (use this if the window does not open) |
-| `python fleet_remote_v3.39.py --port 9000` | Use a specific port |
-| `python fleet_remote_v3.39.py --share` | Also lets other computers on the network open it in a browser; they must enter the access code printed in the console |
+| `python fleet_remote_v3.40.py` | Opens the app in its own window |
+| `python fleet_remote_v3.40.py --browser` | Opens it in your web browser instead (use this if the window does not open) |
+| `python fleet_remote_v3.40.py --port 9000` | Use a specific port |
+| `python fleet_remote_v3.40.py --share` | Also lets other computers on the network open it in a browser; they must enter the access code printed in the console |
 
 ## Your devices and settings
 
