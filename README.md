@@ -3,7 +3,7 @@
 Control many Amazon Fire TV devices (Cube, Stick) and Apple TVs from one window, by IP
 address, on Windows or Mac. No ADB install needed.
 
-Current version: **v3.56** (the number is in the file name: `fleet_remote_v3.56.py`).
+Current version: **v3.57** (the number is in the file name: `fleet_remote_v3.57.py`).
 
 ## What it does
 
@@ -70,8 +70,8 @@ How to use them:
 - **Windows:** open a Command Prompt in the folder and run `pyw "Fleet Remote.pyw" --share`,
   or add the option at the end of the shortcut's **Target** (right-click > Properties).
 - **Mac:** open Terminal in the folder and run `python3 "Fleet Remote.pyw" --share`.
-- Or run the app file itself: `python fleet_remote_v3.56.py --browser` (Windows) /
-  `python3 fleet_remote_v3.56.py --browser` (Mac).
+- Or run the app file itself: `python fleet_remote_v3.57.py --browser` (Windows) /
+  `python3 fleet_remote_v3.57.py --browser` (Mac).
 
 ## Your devices and settings
 
@@ -96,7 +96,7 @@ already; Apple TVs may need pairing again.
 
 | File | What it is |
 |---|---|
-| `fleet_remote_v3.56.py` | The app |
+| `fleet_remote_v3.57.py` | The app |
 | `Fleet Remote.pyw` | The launcher: installs what's needed the first time, makes the shortcut / Mac app, starts the newest app file |
 | `requirements.txt` | The Python packages it installs |
 | `icon.ico` | The app's icon |
@@ -131,8 +131,9 @@ already; Apple TVs may need pairing again.
 - **Mac: "Fleet Remote.app can't be opened":** right-click it > Open the first time.
 - **Mac: "Python would like to access files in your Downloads folder":** that's Download
   EDID saving its files. Choose Allow (or later: System Settings > Privacy & Security > Files and Folders).
-- **Mac: live video shows "decoder error" but screenshots work:** please report it; the Mac
-  version of live video is not tested yet.
+- **Mac: live video shows "decoder error" but screenshots work:** v3.57 tries the other H.264
+  form by itself and writes the details to `.firecube-fleet/error.log`. If it still fails, send
+  that file (lines starting with `page:`).
 - **Windows: other computers can't open it with `--share`:** allow Python in the Windows
   firewall prompt. On a network set to "Public", Windows blocks them anyway: set it to
   "Private" (Settings > Network & internet) or ask IT.
