@@ -3,7 +3,7 @@
 Control many Amazon Fire TV devices (Cube, Stick) and Apple TVs from one window, by IP
 address, on Windows or Mac. No ADB install needed.
 
-Current version: **v3.52** (the number is in the file name: `fleet_remote_v3.52.py`).
+Current version: **v3.54** (the number is in the file name: `fleet_remote_v3.54.py`).
 
 ## What it does
 
@@ -67,8 +67,8 @@ How to use them:
 - **Windows:** open a Command Prompt in the folder and run `pyw "Fleet Remote.pyw" --share`,
   or add the option at the end of the shortcut's **Target** (right-click > Properties).
 - **Mac:** open Terminal in the folder and run `python3 "Fleet Remote.pyw" --share`.
-- Or run the app file itself: `python fleet_remote_v3.52.py --browser` (Windows) /
-  `python3 fleet_remote_v3.52.py --browser` (Mac).
+- Or run the app file itself: `python fleet_remote_v3.54.py --browser` (Windows) /
+  `python3 fleet_remote_v3.54.py --browser` (Mac).
 
 ## Your devices and settings
 
@@ -93,14 +93,19 @@ already; Apple TVs may need pairing again.
 
 | File | What it is |
 |---|---|
-| `fleet_remote_v3.52.py` | The app |
+| `fleet_remote_v3.54.py` | The app |
 | `Fleet Remote.pyw` | The launcher: installs what's needed the first time, makes the shortcut / Mac app, starts the newest app file |
 | `requirements.txt` | The Python packages it installs |
 | `icon.ico` | The app's icon |
 | `Fleet Remote.lnk` / `Fleet Remote.app` | Made by the launcher on your computer (not part of the download) |
+| `.gitignore` | Keeps the computer-specific files above (and `venv`) out of the GitHub repository |
 
 ## Troubleshooting
 
+- **Started it twice:** only one Fleet Remote runs at a time; starting it again brings the
+  open window to the front.
+- **The shortcut stopped working after a Python update:** double-click `Fleet Remote.pyw`
+  once; it rebuilds the shortcut for the new Python (re-pin it to the taskbar if you pinned it).
 - **No window appears:** start it with `--browser` (see Options). On Windows the window
   needs Microsoft Edge WebView2, which Windows 10 and 11 normally have.
 - **"Fleet Remote could not install what it needs":** check the internet connection; the
