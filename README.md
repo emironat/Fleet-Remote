@@ -26,8 +26,16 @@ You only need the file name for the command-line options below.
    - Mac: after the installer, open Applications > Python 3.x and double-click
      `Install Certificates.command` once.
 2. Download this repository: green **Code** button > **Download ZIP**, then unzip it.
-3. Double-click **`Fleet Remote.pyw`** in the unzipped folder.
-   - Mac: the first time, right-click it > **Open With** > **Python Launcher**.
+3. **Windows:** double-click **`Fleet Remote.pyw`** in the unzipped folder.
+4. **Mac:** a Mac opens Python files in the IDLE editor by default, so set this up once:
+   1. In Finder, right-click `Fleet Remote.pyw` > **Get Info**.
+   2. Under **Open with**, choose **Python Launcher** (in Applications > Python 3.x;
+      if it is not in the list, pick **Other...** and find it there).
+   3. Click **Change All...** > **Continue**.
+
+   Now double-click `Fleet Remote.pyw`. A Terminal window may open too; you can close it,
+   the app keeps running. (If IDLE still opens instead, press **F5** in the window with
+   the code to start it.)
 
 The first start installs what Fleet Remote needs (a small window says so, about a
 minute). After that it opens straight away. Make a shortcut (Windows) or an alias
