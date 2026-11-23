@@ -1,0 +1,14 @@
+# The packages Fleet Remote needs. The launcher installs these into a private venv next
+# to the app, so nothing else on the computer is affected, and pins every package they
+# pull in too with constraints.txt (same folder). Fleet Remote uses adb-shell internals
+# (live video), so a different adb-shell can break it; the others are the versions
+# v3.90 was tested with. The launcher reinstalls when an installed version differs.
+adb-shell[async]==0.4.4
+rsa==4.9.1
+pyasn1==0.6.3
+fastapi==0.139.0
+pydantic==2.14.4
+uvicorn==0.50.2
+pywebview==6.2.1
+pyatv==0.18.0
+truststore==0.10.5
