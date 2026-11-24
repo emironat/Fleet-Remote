@@ -3,15 +3,18 @@
 Control many Amazon Fire TV devices (Cube, Stick) and Apple TVs from one window, by IP
 address, on Windows or Mac. No ADB install needed.
 
-Current version: **v3.91** (the number is in the file name: `fleet_remote_v3.91.py`).
+Current version: **v4.04** (the number is in the file name: `fleet_remote_v4.04.py`).
 
 ## What it does
 
 | Part of the window | What you can do |
 |---|---|
-| **Devices** | Add devices by IP (**+ Add device**), sort them into groups (**+ Add group**), fold a group away by clicking it, **Connect all**. Click a device to control it. Double-click its name or IP to change its name, IP address or group. |
+| **Devices** | Add devices by IP (**+ Add device**), sort them into groups (**+ Add group**), fold a group away by clicking it, **Connect all**. Click a device to control it. Double-click its name or IP to change its name, IP address, group, SDI or HDMI input. |
+| **Videohub** (SDI router) | If your devices feed a Blackmagic Videohub whose one output goes to a QC monitor: the **QC monitor** tile under the device list shows the router, the QC output and what the monitor is showing; click it (or **Router settings** in the bar at the top of the **Video input** view; **SDI** or **HDMI** brings the picture back) to open the settings in place of the video box: the router's IP address and a grid of its outputs, click the one the QC monitor is on, then **Save**. Give each device its **SDI input** (double-click it): from then on, clicking that device to control it also puts its input on the QC monitor. The tile also shows what the monitor is showing right now (also when someone routes it on the router itself). Talks the Videohub Ethernet Protocol (TCP 9990); nothing to install on the router. |
+| **HDMI router** (AVPro matrix) | The same for an AVPro Edge HDMI matrix (AC-MX-88 and family) your devices' HDMI outputs feed: its section in **Router settings** takes the matrix's IP address and the output the QC monitor (or capture box) is on; give each device its **HDMI input** (double-click it). The **SDI** / **HDMI** bar in the **Video input** view picks which router is in use: clicking a device routes it on that one only, and the QC monitor tile shows that router. Only the chosen QC output is ever changed, on either router. Talks the AVPro telnet API (TCP 23). |
 | **Remote** | D-pad, OK, Back, Home, Menu, rewind / play-pause / fast forward, volume. The **gear** opens the TV's Settings page, **restart** (the circular arrow; click it twice) reboots a Fire TV, which is back in about a minute, and the **power** button puts a Fire TV in standby or wakes it. Your keyboard works too: arrows, Enter = OK, Backspace = Back, Space = Play/Pause. |
-| **Screen** (Fire TV) | **Screenshot**, **Auto** (a new screenshot every 3 s) or **Live video** (with Low / Normal / High quality). Protected video (Netflix etc.) shows as black: Fire TV keeps it out of captures. |
+| **Device screen** (Fire TV) | What the Fire TV Stick or Cube itself is showing: **Screenshot**, **Auto** (a new screenshot every 3 s) or **Live video** (with Low / Normal / High quality). Protected video (Netflix etc.) shows as black: Fire TV keeps it out of captures. An Apple TV can't share its screen. |
+| **Video input** | The second view in the same place: click **Video input** at the top of the card, **Device screen** to come back. Reserved for a video input device (a capture box taking, for example, the SDI feed the QC monitor shows); empty until one is added. The bar at the top: **SDI** / **HDMI** (which router the picture comes through) / **Router settings** (both routers' settings open here, in place of the picture). |
 | **Keyboard** | **Type + Send** a line of text, or **Live typing**: your keys go straight to the TV (Esc stops it). Backspace, Clear field, Enter. |
 | **HDMI Signal & Sleep** (Fire TV) | **Never sleep**: Enabled keeps it awake (no screen saver, no sleep), Disabled puts its own timers back. What it sends over HDMI right now: video mode, colour, HDR, audio format and the audio channels present. **Download EDID** saves the EDID of the TV (or EDID emulator) it is plugged into to your Downloads folder, as a `.bin` (raw bytes, for an EDID tool or emulator) and a `.txt` (decoded, with a hex dump). On a Fire TV Stick the audio format comes from Android's audio service, the EDID is the copy Fire OS saved when it last detected the TV, and the colour and HDR lines show what Fire OS set up for the HDMI link ("up to 10-bit", the TV's HDR formats) rather than the live signal (the Stick's HDMI driver can't be read). |
 
@@ -84,8 +87,8 @@ How to use them:
 - **Windows:** open a Command Prompt in the folder and run `pyw "Fleet Remote.pyw" --share`,
   or add the option at the end of the shortcut's **Target** (right-click > Properties).
 - **Mac:** open Terminal in the folder and run `python3 "Fleet Remote.pyw" --share`.
-- Or run the app file itself: `python fleet_remote_v3.91.py --browser` (Windows) /
-  `python3 fleet_remote_v3.91.py --browser` (Mac).
+- Or run the app file itself: `python fleet_remote_v4.04.py --browser` (Windows) /
+  `python3 fleet_remote_v4.04.py --browser` (Mac).
 
 ## Your devices and settings
 
@@ -97,14 +100,16 @@ Windows `C:\Users\<you>\.firecube-fleet`, Mac `/Users/<you>/.firecube-fleet`
 |---|---|
 | `devices.json` | Your devices: name, IP, group, Apple TV pairing keys, and the sleep timers a Fire TV had before Never sleep |
 | `groups.json` | Your groups |
+| `videohub.json` | The Videohub's IP address and the QC monitor's output (only when you set one up) |
+| `hdmirouter.json` | The HDMI matrix's IP address and the QC monitor's output (only when you set one up) |
 | `adbkey`, `adbkey.pub` | The key your Fire TVs approved ("Always allow") |
 | `share_code.txt` | The `--share` access code |
 | `error.log`, `setup.log` | Details when something fails at start or during the first-start install (`error.log` also gets warnings from inside the app; it is trimmed when it passes 500 KB) |
 | `running.json` | The address the running copy is on, so a second start can find it (removed when it closes) |
 | `scrcpy-server-v5.0.1`, `webview` | Live video helper (downloaded from GitHub the first time you use Live video) and the window's own storage |
 
-**Moving to another computer:** copy `devices.json`, `groups.json`, `adbkey` and
-`adbkey.pub` into the same folder there. The Fire TVs then know the new computer
+**Moving to another computer:** copy `devices.json`, `groups.json`, `videohub.json`, `adbkey`
+and `adbkey.pub` into the same folder there. The Fire TVs then know the new computer
 already; Apple TVs may need pairing again.
 
 **Keep this folder to yourself.** The ADB key (`adbkey`) and the Apple TV pairing keys in
@@ -118,7 +123,7 @@ turn ADB debugging off and on again on that Fire TV (Apple TV: pair it again).
 
 | File | What it is |
 |---|---|
-| `fleet_remote_v3.91.py` | The app |
+| `fleet_remote_v4.04.py` | The app |
 | `Fleet Remote.pyw` | The launcher: installs what's needed the first time, makes the shortcut / Mac app, starts the newest app file |
 | `requirements.txt` | The Python packages it installs |
 | `constraints.txt` | The exact version of every package, including the ones they pull in, for Windows and Mac |

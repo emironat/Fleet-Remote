@@ -3,7 +3,7 @@
 # constraints (pip install -r requirements.txt -c constraints.txt), so the same versions
 # land on every computer. Resolved for ready-made wheels on Windows (Python 3.12 / 3.14),
 # Mac Apple silicon (Python 3.13 / 3.15) and Intel Mac (Python 3.12); lines ending in a
-# condition apply to that platform only. Made for v3.91 (11-2026).
+# condition apply to that platform only. Made for v4.04 (11-2026).
 adb-shell==0.4.4
 aiofiles==25.1.0
 aiohappyeyeballs==2.7.1
