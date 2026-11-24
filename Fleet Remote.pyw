@@ -342,6 +342,20 @@ def win_shortcut(exe: Path) -> None:
         pass                                            # no shortcut: the .pyw still works
 
 
+def mac_native() -> None:
+    """macOS opens an app whose executable is a script under Rosetta on an Apple-silicon Mac
+    (seen on macOS 15 with 'Fleet Remote.app', LSRequiresNativeExecution or not), and that
+    Intel Python can't load the venv's arm64 packages: start this launcher again natively."""
+    try:
+        translated = subprocess.run(["sysctl", "-n", "sysctl.proc_translated"], capture_output=True,
+                                    text=True, timeout=10).stdout.strip() == "1"
+        native = ["/usr/bin/arch", "-arm64", sys.executable]
+        if translated and subprocess.run([*native, "-c", "pass"], capture_output=True, timeout=60).returncode == 0:
+            os.execv(native[0], [*native, str(Path(__file__).resolve()), *sys.argv[1:]])
+    except (OSError, subprocess.SubprocessError):
+        pass                                            # an Intel-only Python: carry on as before
+
+
 def mac_app(exe: Path) -> None:
     """Make 'Fleet Remote.app' next to this file: a normal Mac app that runs this launcher
     without opening IDLE or a Terminal window. Falls back from the venv's Python to the
@@ -475,6 +489,8 @@ def main() -> None:
             hide_console()
         except Exception:
             pass
+    elif sys.platform == "darwin":
+        mac_native()
     script = newest()
     if script is None:
         message(f"No fleet_remote_v*.py found in\n{HERE}")

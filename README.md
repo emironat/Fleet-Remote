@@ -3,7 +3,7 @@
 Control many Amazon Fire TV devices (Cube, Stick) and Apple TVs from one window, by IP
 address, on Windows or Mac. No ADB install needed.
 
-Current version: **v3.90** (the number is in the file name: `fleet_remote_v3.90.py`).
+Current version: **v3.91** (the number is in the file name: `fleet_remote_v3.91.py`).
 
 ## What it does
 
@@ -45,8 +45,9 @@ Remote pins have ready-made builds for these; a newer Python may need a newer Fl
      it from that shortcut (you can pin it to the taskbar or Start, or copy it to the Desktop).
    - **Mac:** the first time only, right-click **`Fleet Remote.pyw`** > **Open With** >
      **Python Launcher** (in Applications > Python 3.x). A Terminal window flashes up and
-     closes by itself. This makes **`Fleet Remote.app`** in the same folder. From then on
-     double-click that (you can drag it to the Dock); the `.pyw` way keeps working too.
+     closes by itself. This makes **`Fleet Remote.app`** in the same folder, with the app's
+     icon (the `.pyw` file itself always shows Python's). From then on double-click the app
+     (you can drag it to the Dock); the `.pyw` way keeps working too.
      Keep `Fleet Remote.app` inside the Fleet Remote folder: it starts the files next to it.
 
 The very first start installs what Fleet Remote needs, quietly in the background, so the
@@ -83,8 +84,8 @@ How to use them:
 - **Windows:** open a Command Prompt in the folder and run `pyw "Fleet Remote.pyw" --share`,
   or add the option at the end of the shortcut's **Target** (right-click > Properties).
 - **Mac:** open Terminal in the folder and run `python3 "Fleet Remote.pyw" --share`.
-- Or run the app file itself: `python fleet_remote_v3.90.py --browser` (Windows) /
-  `python3 fleet_remote_v3.90.py --browser` (Mac).
+- Or run the app file itself: `python fleet_remote_v3.91.py --browser` (Windows) /
+  `python3 fleet_remote_v3.91.py --browser` (Mac).
 
 ## Your devices and settings
 
@@ -117,7 +118,7 @@ turn ADB debugging off and on again on that Fire TV (Apple TV: pair it again).
 
 | File | What it is |
 |---|---|
-| `fleet_remote_v3.90.py` | The app |
+| `fleet_remote_v3.91.py` | The app |
 | `Fleet Remote.pyw` | The launcher: installs what's needed the first time, makes the shortcut / Mac app, starts the newest app file |
 | `requirements.txt` | The Python packages it installs |
 | `constraints.txt` | The exact version of every package, including the ones they pull in, for Windows and Mac |

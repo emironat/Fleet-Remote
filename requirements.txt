@@ -2,7 +2,7 @@
 # to the app, so nothing else on the computer is affected, and pins every package they
 # pull in too with constraints.txt (same folder). Fleet Remote uses adb-shell internals
 # (live video), so a different adb-shell can break it; the others are the versions
-# v3.90 was tested with. The launcher reinstalls when an installed version differs.
+# v3.91 was tested with. The launcher reinstalls when an installed version differs.
 adb-shell[async]==0.4.4
 rsa==4.9.1
 pyasn1==0.6.3
